@@ -180,7 +180,12 @@ func DefaultIntentHandler(_ *ability.Request, resp *ability.Response) {
 	// Get weather calling the weather api
 	data, err := weatherClient.GetWeather(city)
 	if err != nil {
-		resp.Nlg.Sentence = "An error occurred retrieving the weather for {city}."
+		resp.Nlg.Sentence = "An error occurred retrieving the weather for {{city}}."
+		resp.Nlg.Params = []ability.NLGParam{{
+			Name: "city",
+			Value: city,
+			Type: "string",
+		}}
 		return
 	}
 

@@ -2,13 +2,12 @@ package weather
 
 import (
 	"encoding/json"
-	"strconv"
 	"strings"
 	"time"
 )
 
 func (wd *WeatherData) UnmarshalJSON(b []byte) (err error) {
-	var rawStrings map[string]string
+	var rawStrings map[string]interface{}
 
 	if err = json.Unmarshal(b, &rawStrings); err != nil {
 		return err
@@ -16,19 +15,15 @@ func (wd *WeatherData) UnmarshalJSON(b []byte) (err error) {
 
 	for k, v := range rawStrings {
 		if strings.ToLower(k) == "temperature" {
-			if wd.Temperature, err = strconv.ParseFloat(v, 32); err != nil {
-				return err
-			}
+			wd.Temperature = v.(float64)
 		}
 
 		if strings.ToLower(k) == "timestamp" {
-			if wd.Timestamp, err = time.Parse(time.RFC3339, v); err != nil {
-				return err
-			}
+			wd.Timestamp = time.Unix(int64(v.(float64)), 0)
 		}
 
 		if strings.ToLower(k) == "weather" {
-			wd.Weather = v
+			wd.Weather = v.(string)
 		}
 	}
 	return
@@ -40,7 +35,7 @@ type Forecast struct {
 }
 
 type WeatherData struct {
-	Temperature float64   `json:"temperature,string"`
+	Temperature float64   `json:"temperature,number"`
 	Timestamp   time.Time `json:"timestamp,string"`
 	Weather     string    `json:"weather,string"`
 }
