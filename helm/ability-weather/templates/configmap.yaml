@@ -11,5 +11,5 @@ data:
     server.log-level: {{ .Values.logLevel }}
 
     tools.weather:
-      host: "tool-allocine"
+      host: "tool-openweathermap"
       port: 5555
