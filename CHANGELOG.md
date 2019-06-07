@@ -6,4 +6,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##  [0.1]
 ###  Added
+- Call the real weather tool.
 - Initialized ability repository.

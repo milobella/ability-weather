@@ -10,3 +10,6 @@ data:
     server.port: {{ .Values.containerPort }}
     server.log-level: {{ .Values.logLevel }}
 
+    tools.weather:
+      host: "tool-allocine"
+      port: 5555

@@ -6,4 +6,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0]
 ### Added
+- Weather tool configuration.
 - Created the helm chart with a deployment, a config map and a service.
