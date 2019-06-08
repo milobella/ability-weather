@@ -50,7 +50,7 @@ func init() {
 		viper.GetString("tools.weather.host"),
 		viper.GetInt("tools.weather.port"))
 
-	weatherSentencesPresent := make(map[string]string)
+	weatherSentencesPresent = make(map[string]string)
 	weatherSentencesPresent["thunderstorm with light rain"] = "There is thunderstorm with light rain."
 	weatherSentencesPresent["thunderstorm with rain"] = "There is thunderstorm with rain."
 	weatherSentencesPresent["thunderstorm with heavy rain"] = "There is thunderstorm with heavy rain."
@@ -106,7 +106,7 @@ func init() {
 	weatherSentencesPresent["scattered clouds"] = "There is scattered clouds."
 	weatherSentencesPresent["broken clouds"] = "There is broken clouds."
 	weatherSentencesPresent["overcast clouds"] = "There is overcast clouds."
-	weatherSentencesFuture := make(map[string]string)
+	weatherSentencesFuture = make(map[string]string)
 	weatherSentencesFuture["thunderstorm with light rain"] = "There will be thunderstorm with light rain."
 	weatherSentencesFuture["thunderstorm with rain"] = "There will be thunderstorm with rain."
 	weatherSentencesFuture["thunderstorm with heavy rain"] = "There will be thunderstorm with heavy rain."

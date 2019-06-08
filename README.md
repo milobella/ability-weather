@@ -29,7 +29,7 @@ $ bin/ability
 
 #### Get the weather of now in the default city.
 ```bash
-$ curl -i -X POST http://localhost:4444/resolve -d '{"nlu":{"BestIntent": "GET_WEATHER"}}'                                                                                                              52 ↵
+$ curl -i -X POST http://localhost:4444/resolve -d '{"nlu":{"BestIntent": "GET_WEATHER"}}'
 HTTP/1.1 200 OK
 Date: Fri, 07 Jun 2019 17:08:46 GMT
 Content-Length: 294
