@@ -191,7 +191,7 @@ func DefaultIntentHandler(_ *ability.Request, resp *ability.Response) {
 
 	// Retrieve the weather sentence.
 	var weatherSentence string
-	val, ok := weatherSentencesPresent[data.Weather
+	val, ok := weatherSentencesPresent[data.Weather]
 	if ok {
 		weatherSentence = val
 	} else {
