@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.13.1
 LABEL maintainer="celian.garcia1@gmail.com"
 
 # Some arguments used for labelling
