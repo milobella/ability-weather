@@ -1,8 +1,8 @@
 package main
 
 import (
-	"gitlab.milobella.com/milobella/ability-sdk-go/pkg/ability"
-	"gitlab.milobella.com/milobella/weather-ability/pkg/tools/weather"
+	"milobella.com/gitlab/milobella/ability-sdk-go/pkg/ability"
+	"milobella.com/gitlab/milobella/weather-ability/pkg/tools/weather"
 	"os"
 
 	"github.com/sirupsen/logrus"
