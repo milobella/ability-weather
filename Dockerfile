@@ -24,6 +24,7 @@ LABEL org.label-schema.docker.cmd="docker run -it $DOCKER_IMAGE:$BUILD_VERSION"
 
 # Push the current repository into the srcs and define it as working dir
 ENV GOPATH_SOURCES="$GOPATH/src"
+ENV GOPRIVATE="milobella.com"
 ENV APPLICATION_SOURCES="$GOPATH_SOURCES/milobella.com/gitlab/$PROJECT_NAME/$MODULE_NAME"
 COPY . $APPLICATION_SOURCES
 WORKDIR $APPLICATION_SOURCES
