@@ -1,9 +1,6 @@
-module milobella.com/gitlab/milobella/weather-ability
+module github.com/milobella/ability-weather
 
-go 1.13
+go 1.16
 
-require (
-	github.com/sirupsen/logrus v1.4.2
-	github.com/spf13/viper v1.4.0
-	milobella.com/gitlab/milobella/ability-sdk-go v0.3.0
-)
+require github.com/milobella/ability-sdk-go v0.4.2
+

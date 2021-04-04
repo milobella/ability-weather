@@ -1,55 +1,15 @@
 package main
 
 import (
-	"milobella.com/gitlab/milobella/ability-sdk-go/pkg/ability"
-	"milobella.com/gitlab/milobella/weather-ability/pkg/tools/weather"
-	"os"
-
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
+	"github.com/milobella/ability-sdk-go/pkg/ability"
+	"github.com/milobella/ability-weather/pkg/tools/weather"
 )
 
-var additionalConfigPath string
 var weatherClient *weather.Client
 var weatherSentencesPresent map[string]string
 var weatherSentencesFuture map[string]string
 
-//TODO: try to put some common stuff into a separate repository
 func init() {
-	viper.SetConfigName("config")
-	viper.SetConfigType("yaml")
-
-	additionalConfigPath = os.Getenv("ADDITIONAL_CONFIG_PATH")
-	if len(additionalConfigPath) != 0 {
-		viper.AddConfigPath(additionalConfigPath)
-	}
-
-	viper.AddConfigPath(".")
-	viper.SetDefault("server.log-level", "info")
-
-	logrus.SetFormatter(&logrus.TextFormatter{})
-
-	// Output to stdout instead of the default stderr
-	// Can be any io.Writer, see below for File example
-	logrus.SetOutput(os.Stdout)
-
-	err := viper.ReadInConfig() // Find and read the config file
-	if err != nil { // Handle errors reading the config file
-		logrus.Errorf("Fatal error config file: %s \n", err)
-	}
-
-	if level, err := logrus.ParseLevel(viper.GetString("server.log-level")); err == nil {
-		logrus.SetLevel(level)
-	} else {
-		logrus.Warn("Failed to parse the log level. Keeping the logrus default level.")
-	}
-
-	logrus.Debugf("Configuration -> %+v", viper.AllSettings())
-
-	weatherClient = weather.NewClient(
-		viper.GetString("tools.weather.host"),
-		viper.GetInt("tools.weather.port"))
-
 	weatherSentencesPresent = make(map[string]string)
 	weatherSentencesPresent["thunderstorm with light rain"] = "There is thunderstorm with light rain."
 	weatherSentencesPresent["thunderstorm with rain"] = "There is thunderstorm with rain."
@@ -106,6 +66,7 @@ func init() {
 	weatherSentencesPresent["scattered clouds"] = "There is scattered clouds."
 	weatherSentencesPresent["broken clouds"] = "There is broken clouds."
 	weatherSentencesPresent["overcast clouds"] = "There is overcast clouds."
+
 	weatherSentencesFuture = make(map[string]string)
 	weatherSentencesFuture["thunderstorm with light rain"] = "There will be thunderstorm with light rain."
 	weatherSentencesFuture["thunderstorm with rain"] = "There will be thunderstorm with rain."
@@ -167,8 +128,13 @@ func init() {
 
 // fun main()
 func main() {
+	// Read configuration
+	conf := ability.ReadConfiguration()
+
+	weatherClient = weather.NewClient(conf.Tools["weather"].Host, conf.Tools["weather"].Port)
+
 	// Initialize server
-	server := ability.NewServer("Weather", viper.GetInt("server.port"))
+	server := ability.NewServer("Weather", conf.Server.Port)
 	server.RegisterIntentRule("GET_WEATHER", DefaultIntentHandler)
 	server.Serve()
 }

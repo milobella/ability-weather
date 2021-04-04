@@ -1,5 +1,5 @@
-# Weather
-Ability to get the weather.
+# Weather Ability
+Milobella Ability to get the weather.
 
 ## Features
 >
@@ -8,14 +8,11 @@ Ability to get the weather.
 
 ## Prerequisites
 
-- Having access to [milobella.com/gitlab](https://milobella.com/gitlab/milobella)
 - Having ``golang`` installed [instructions](https://golang.org/doc/install)
-- Having ``go dep`` installed [instructions](https://golang.github.io/dep/docs/installation.html)
 
 ## Build
 
 ```bash
-$ dep ensure
 $ go build -o bin/ability cmd/ability/main.go
 ```
 
@@ -37,7 +34,3 @@ Content-Type: text/plain; charset=utf-8
 
 {"nlg":{"sentence":"In {{city}} now, the temperature is {{temperature}}. {{weather_sentence}}","params":[{"name":"city","value":"Cannes","type":"string"},{"name":"temperature","value":21.78,"type":"string"},{"name":"weather_sentence","value":"","type":"inner"}]},"context":{"slot_filling":{}}}
 ```
-
-## CHANGELOGS
-- [Application changelog](CHANGELOG.md)
-- [Helm chart changelog](weather-ability/helm/ability-cinema/CHANGELOG.md)
