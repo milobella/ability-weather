@@ -1,7 +1,10 @@
 package main
 
 import (
-	"github.com/milobella/ability-sdk-go/pkg/ability"
+	"github.com/milobella/ability-sdk-go/pkg/config"
+	"github.com/milobella/ability-sdk-go/pkg/model"
+	"github.com/milobella/ability-sdk-go/pkg/server"
+	"github.com/milobella/ability-sdk-go/pkg/server/conditions"
 	"github.com/milobella/ability-weather/pkg/tools/weather"
 )
 
@@ -129,17 +132,17 @@ func init() {
 // fun main()
 func main() {
 	// Read configuration
-	conf := ability.ReadConfiguration()
+	conf := config.Read()
 
 	weatherClient = weather.NewClient(conf.Tools["weather"].Host, conf.Tools["weather"].Port)
 
 	// Initialize server
-	server := ability.NewServer("Weather", conf.Server.Port)
-	server.RegisterIntentRule("GET_WEATHER", DefaultIntentHandler)
-	server.Serve()
+	srv := server.New("Weather", conf.Server.Port)
+	srv.Register(conditions.IfIntents("GET_WEATHER"), DefaultIntentHandler)
+	srv.Serve()
 }
 
-func DefaultIntentHandler(_ *ability.Request, resp *ability.Response) {
+func DefaultIntentHandler(_ *model.Request, resp *model.Response) {
 	// TODO: take this parameter from user preferences or from request
 	city := "Cannes"
 
@@ -147,10 +150,10 @@ func DefaultIntentHandler(_ *ability.Request, resp *ability.Response) {
 	data, err := weatherClient.GetWeather(city)
 	if err != nil {
 		resp.Nlg.Sentence = "An error occurred retrieving the weather for {{city}}."
-		resp.Nlg.Params = []ability.NLGParam{{
-			Name: "city",
+		resp.Nlg.Params = []model.NLGParam{{
+			Name:  "city",
 			Value: city,
-			Type: "string",
+			Type:  "string",
 		}}
 		return
 	}
@@ -166,17 +169,17 @@ func DefaultIntentHandler(_ *ability.Request, resp *ability.Response) {
 
 	// Build the NLG answer
 	resp.Nlg.Sentence = "In {{city}} now, the temperature is {{temperature}}. {{weather_sentence}}"
-	resp.Nlg.Params = []ability.NLGParam{{
-		Name: "city",
+	resp.Nlg.Params = []model.NLGParam{{
+		Name:  "city",
 		Value: city,
-		Type: "string",
-	},{
-		Name: "temperature",
+		Type:  "string",
+	}, {
+		Name:  "temperature",
 		Value: int(data.Temperature),
-		Type: "string",
-	},{
-		Name: "weather_sentence",
+		Type:  "string",
+	}, {
+		Name:  "weather_sentence",
 		Value: weatherSentence,
-		Type: "inner",
+		Type:  "inner",
 	}}
 }
